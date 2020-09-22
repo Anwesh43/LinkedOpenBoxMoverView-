@@ -50,7 +50,7 @@ fun Canvas.drawOpenBoxMover(scale : Float, w : Float, h : Float, paint : Paint) 
             restore()
         }
         save()
-        translate(-w / 2 + size + (w / 2 - size) * sf3, -size / 2)
+        translate(size + (w / 2 - size) * sf3, 0f)
         drawLine(0f, 0f, 0f, size * sf2, paint)
         restore()
         restore()
