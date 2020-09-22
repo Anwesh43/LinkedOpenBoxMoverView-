@@ -193,4 +193,27 @@ class OpenBoxMoverView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : OpenBoxMoverView) {
+
+        private val animator : Animator = Animator(view)
+        private val obm : OpenBoxMover = OpenBoxMover(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            obm.draw(canvas, paint)
+            animator.animate {
+                obm.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            obm.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
