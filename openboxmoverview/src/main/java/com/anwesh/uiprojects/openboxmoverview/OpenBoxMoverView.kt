@@ -128,6 +128,46 @@ class OpenBoxMoverView(ctx : Context) : View(ctx) {
                 animated = false
             }
         }
+    }
 
+    data class OBMNode(var i : Int, val state : State = State()) {
+
+        private var next : OBMNode? = null
+        private var prev : OBMNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < colors.size - 1) {
+                next = OBMNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawOBMNode(i, state.scale, paint)
+        }
+
+        fun update(cb : (Float) -> Unit) {
+            state.update(cb)
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : OBMNode {
+            var curr : OBMNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
     }
 }
