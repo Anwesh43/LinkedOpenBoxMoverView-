@@ -216,4 +216,13 @@ class OpenBoxMoverView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : OpenBoxMoverView {
+            var view : OpenBoxMoverView = OpenBoxMoverView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
